@@ -1,0 +1,51 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: >
+  A SAM application to invoke a Lambda that calls the Bedrock Titan Image Generator then stores the output in S3 and logs in CloudWatch
+
+Globals:
+  Function:
+    Timeout: 60  # Adjust as necessary, considering the expected execution time.
+
+Resources:
+  S3ImageGeneratorFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: S3_image_generator/
+      Handler: app.lambda_handler
+      Runtime: python3.8
+      MemorySize: 128
+      Policies:
+        - Version: "2012-10-17"
+          Statement:
+            - Effect: Allow
+              Action:
+                - "bedrock-runtime:InvokeModel"
+              Resource: "*"  # Adjust based on specific needs
+            - Effect: Allow
+              Action:
+                - "s3:PutObject"
+              Resource: "arn:aws:s3:::s3bucket/*"
+            - Effect: Allow
+              Action:
+                - "logs:CreateLogGroup"
+                - "logs:CreateLogStream"
+                - "logs:PutLogEvents"
+              Resource: "arn:aws:logs:*:*:*"
+      Events:
+        TitanImageApi:
+          Type: Api
+          Properties:
+            Path: /generate-image
+            Method: post
+
+Outputs:
+  S3ImageGeneratorApi:
+    Description: "API Gateway endpoint URL for Prod stage for S3 Image Generator function"
+    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/generate-image/"
+  S3ImageGeneratorFunction:
+    Description: "S3 Image Generator Function ARN"
+    Value: !GetAtt S3ImageGenerator.Arn
+  S3ImageGeneratorFunctionIamRole:
+    Description: "Implicit IAM Role created for S3 Image Generator function"
+    Value: !GetAtt S3ImageGeneratorRole.Arn
