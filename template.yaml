@@ -1,7 +1,7 @@
 AWSTemplateFormatVersion: '2010-09-09'
 Transform: AWS::Serverless-2016-10-31
 Description: >
-  A SAM application to invoke a Lambda that calls the Bedrock Titan Image Generator then stores the output in S3 and logs in CloudWatch, and a Hello World function
+  A SAM application to invoke a Lambda that calls the Bedrock Titan Image Generator then stores the output in S3 and logs in CloudWatch
 
 Globals:
   Function:
