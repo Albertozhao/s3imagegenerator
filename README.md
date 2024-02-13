@@ -8,9 +8,9 @@ This SAM app demonstrates how to use AWS Lambda to make calls to Bedrock's Titan
 - [AWS SAM CLI](https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/install-sam-cli.html) installed
 - [Access](https://docs.aws.amazon.com/bedrock/latest/userguide/model-access.html) to Bedrock Titan Image Generator G1 and permissions to create Lambda functions, API Gateway, and S3 buckets
 
-### 1. Create an S3 Bucket
+### 1. Create a S3 Bucket
 
-Create an S3 bucket where the generated images will be stored:
+Create a S3 bucket where the generated images will be stored:
 
 ```bash
 aws s3 mb s3://<YOUR_BUCKET_NAME> --region <YOUR_REGION>
