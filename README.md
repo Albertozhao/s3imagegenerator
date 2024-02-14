@@ -1,6 +1,6 @@
 # S3 Image Generator
 
-This SAM app demonstrates how to use AWS Lambda to make calls to Bedrock's Titan Image Generator G1, generates an image based on text input, uploads those images into an S3 bucket, and logs everything in CloudWatch.
+This SAM app demonstrates how to use AWS Lambda to make calls to Bedrock's Titan Image Generator G1, generate an image based on text input, upload those images into an S3 bucket, and log everything in CloudWatch.
 
 ## Setup
 
