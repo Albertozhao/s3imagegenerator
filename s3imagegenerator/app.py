@@ -4,20 +4,18 @@ import boto3
 from botocore.exceptions import ClientError
 import base64
 
-# This creates a logger instance
 logger = logging.getLogger()
 logger.setLevel(logging.INFO)
 
-# This initializes the clients Bedrock Runtime and S3
+
 bedrock_runtime_client = boto3.client('bedrock-runtime', region_name='us-east-1')
 s3 = boto3.client('s3')
 
-bucket_name = 's3bucketname' # Add the s3 bucket you want to upload photos to
+bucket_name = 's3bucketname'
 
 def lambda_handler(event, context):
-    # We need to extract 'text' and 'seed' from the event, provide defaults if not present
     prompt = event.get('text', 'default prompt')
-    seed = event.get('seed', 0)  # Default seed value if not provided
+    seed = event.get('seed', 0)
 
     try:
         base64_image_data = invoke_titan_image(prompt, seed)
@@ -26,7 +24,6 @@ def lambda_handler(event, context):
         image_data = base64.b64decode(base64_image_data)
         object_key = f"generated_images/image_{prompt.replace(' ', '_')}_{seed}.jpg"
 
-        # Now we upload the image data to S3
         s3.put_object(
             Bucket=bucket_name,
             Key=object_key,
