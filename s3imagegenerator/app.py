@@ -7,7 +7,6 @@ import base64
 logger = logging.getLogger()
 logger.setLevel(logging.INFO)
 
-
 bedrock_runtime_client = boto3.client('bedrock-runtime', region_name='us-east-1')
 s3 = boto3.client('s3')
 
